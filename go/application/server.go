@@ -9,7 +9,8 @@ import (
 func Serve(addr string) {
 
 	// http.HandleFunc("/get/user", post(handler.HandleGetUser()))
-	http.HandleFunc("/searchCircle", post(handler.GetCircle))
+	http.HandleFunc("/searchCircle", get(handler.GetCircle))
+	http.HandleFunc("/", get(handler.GetALLCircle))
 
 	log.Println("Server running...")
 	err := http.ListenAndServe(addr, nil)

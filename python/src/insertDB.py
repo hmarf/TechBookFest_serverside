@@ -1,4 +1,4 @@
-# MySQLdbのインポート
+# coding: UTF-8
 import MySQLdb
 import pickle
  
@@ -11,20 +11,19 @@ connection = MySQLdb.connect(
 cursor = connection.cursor()
 
 # id, circle, circle_image, arr, genere, keyword, title, content
-aaa = []
 with open('../data/getData.txt','rb') as f:
-    datas = pickle.load(f)
-    for dataa in datas:
+    load_datas = pickle.load(f)
+    for load_data in load_datas:
         data = []
-        if dataa[6] == None:
-            for dd in dataa:
+        if load_data[6] == None:
+            for dd in load_data:
                 if dd == None:
                     continue
                 dd = dd.replace('\'','')
                 data.append(dd)
             sql = "INSERT INTO circle (circle, circle_image, arr, genere, keyword, title, circle_url) values ('" + data[0] + "','" + data[1] + "','" + data[2]+"','" + data[3]+"','" + data[4]+"','" + data[5]+"','" + data[6]+"')"
         else:
-            for dd in dataa:
+            for dd in load_data:
                 dd = dd.replace('\'','')
                 data.append(dd)
             sql = "INSERT INTO circle (circle, circle_image, arr, genere, keyword, title, content, circle_url) values ('" + data[0] + "','" + data[1] + "','" + data[2]+"','" + data[3]+"','" + data[4]+"','" + data[5]+"','" + data[6]+"','" + data[7]+"')"

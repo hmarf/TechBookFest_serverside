@@ -1,11 +1,10 @@
 package handler
 
 import (
-	"encoding/json"
 	"go/application/response"
 	"go/domain/model"
+	"strings"
 
-	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -19,22 +18,10 @@ type getCircleResponse struct {
 }
 
 func GetCircle(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Println(err)
-		response.BadRequest(w, "Invalid Request Body")
-		return
-	}
-
-	var requestBody getCircleRequest
-	json.Unmarshal(body, &requestBody)
-
-	if requestBody.Keyword == "" {
-		response.BadRequest(w, "Invalid Request Body")
-		return
-	}
-
-	circles, err := circleService.GetCircle(requestBody.Keyword)
+	keyvalue := strings.Split(r.URL.String(), "?")
+	value := strings.Split(keyvalue[1], "=")
+	print(value)
+	circles, err := circleService.GetCircle(value[1])
 	if err != nil {
 		log.Println(err)
 	}
